@@ -62,19 +62,9 @@ namespace ChatServer
         /// <returns>本地IPv4地址</returns>
         public IPAddress GetLocalIPv4Address()
         {
-            IPAddress localIPv4 = null;
             //获取本机所有的IP地址列表
             IPAddress[] ipAddressList = Dns.GetHostAddresses(Dns.GetHostName());
-            foreach (IPAddress ipAddress in ipAddressList)
-            {
-                //判断是否是IPv4地址
-                if (ipAddress.AddressFamily == AddressFamily.InterNetwork) //AddressFamily.InterNetwork表示IPv4 
-                {
-                    localIPv4 = ipAddress;
-                }
-                else
-                    continue;
-            }
+            var localIPv4 = ipAddressList.FirstOrDefault(x => x.AddressFamily == AddressFamily.InterNetwork);
             return localIPv4;
         }
 
